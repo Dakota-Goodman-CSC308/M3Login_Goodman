@@ -9,34 +9,31 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    //Logical NOT: !expr
+    //Forced Unwrapping: optional expr!
+    //(IUO):type!
     @IBOutlet weak var idTextField: UITextField!
     @IBOutlet weak var pwTextField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     
     @IBAction func loginButton(_ sender: Any){
-        let id = idTextField.text!
-        let pw = pwTextField.text!
+        
+        guard let id = idTextField.text, !id.isEmpty else{
+            return
+        }
+        
+        guard let pw = pwTextField.text, !pw.isEmpty else{
+            return
+        }
         //id: dakota, pw: 1234
-    
-    //        if id.count == 0 || pw.count == 0{
-    //        if id.isEmpty || pw.isEmpty{
-    //            resultLabel.text = "Please input ID and PW!"
-    //            return //early exit
-    //        }
-            //guard condition else{
-            //    return //early exit
-            //}
-            //_____
-            guard id.isEmpty || pw.isEmpty else{
-                resultLabel.text = "Please input ID and PW!"
-                return
-            }
+        
+        func showAlert(message: String){
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+        }
             
-    //        if id == "dakota" && pw == "1234"{
-    //            resultLabel.text = "Login Success!"
-    //        }else{
-    //            resultLabel.text = "Login Fail!"
-    //        }
             resultLabel.text = (id == "dakota" && pw == "1234") ? "Login Success!" : "Login Fail!"
         }
         
@@ -44,7 +41,10 @@ class ViewController: UIViewController {
         
         override func viewDidLoad() {
             super.viewDidLoad()
-            // Do any additional setup after loading the view.
         }
-
+    
+    overridefunc viewDidAppear(_ animated: bool){
+        super.viewDidAppear(animated)
+        idTextField.becomeFirstResponder()
+    }
     }
